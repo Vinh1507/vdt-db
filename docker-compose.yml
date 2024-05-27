@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  vdt-db:
+    image: imageName
+    container_name: vdt-db
+    ports:
+      - "5432:5432"
+    volumes:
+      - vdt-data:/var/lib/postgresql/data
+
+volumes:
+  vdt-data:
