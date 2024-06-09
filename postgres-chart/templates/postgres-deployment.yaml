@@ -6,14 +6,14 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: {{ include "postgres-chart.fullname" . }}
+      app: {{ include "postgres-chart.name" . }}
   template:
     metadata:
       labels:
-        app: {{ include "postgres-chart.fullname" . }}
+        app: {{ include "postgres-chart.name" . }}
     spec:
       containers:
-        - name: postgres
+        - name: vdt-db
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: "IfNotPresent"
           ports:
