@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "postgres-chart.fullname" . }}
+spec:
+  serviceName: {{ include "postgres-chart.fullname" . }}
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.service.port }}
+              name: postgres
+      volumes:
+        - name: postgres-data
+          persistentVolumeClaim:
+            claimName: {{ include "postgres-chart.fullname" . }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "postgres-chart.fullname" . }}
+spec:
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.port }}
+  selector:
+    app: postgres
