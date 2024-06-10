@@ -21,7 +21,8 @@ metadata:
   labels:
     app: postgres
 spec:
-  storageClassName: ""
+  storageClassName: manual
+  
   accessModes:
     - ReadWriteMany
   resources:
